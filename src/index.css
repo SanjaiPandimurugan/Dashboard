@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles for Kendo gauge */
+.k-arc-gauge {
+    height: 100% !important;
+  }
+  
+  .k-arc-gauge .k-gauge-labels {
+    font-size: 10px;
+    color: #666;
+  }
+  
+  .k-arc-gauge .k-pointer {
+    transform-origin: 50% 90%;
+  }
