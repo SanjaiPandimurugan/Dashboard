@@ -30,7 +30,7 @@ function SecondRow() {
   ];
 
   const ValueBox = ({ title, value }) => {
-    const boxColor = title === 'PLAN' ? PLAN_COLOR : ACTUAL_COLOR;
+    const boxColor = title === 'PLAN' ? '#16a34a' : '#ef4444'; // Green for PLAN, Red for ACTUAL
     
     return (
       <div className="bg-white h-full border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
@@ -159,10 +159,10 @@ function SecondRow() {
         {/* Plan/Actual */}
         <div className="col-span-3 grid grid-cols-2 gap-2">
           <div className="h-[210px]">
-            <ValueBox title="PLAN" value="360" />
+            <ValueBox title="ACTUAL" value="525" />
           </div>
           <div className="h-[210px]">
-            <ValueBox title="ACTUAL" value="270" />
+            <ValueBox title="PLAN" value="650" />
           </div>
         </div>
 

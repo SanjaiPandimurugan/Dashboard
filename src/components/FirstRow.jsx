@@ -1,6 +1,6 @@
 function FirstRow() {
   const OEEGauge = () => {
-    const percentage = 85;
+    const percentage = 65;
     const radius = 35;
     const circumference = 2 * Math.PI * radius;
     const strokeDashoffset = circumference - (percentage / 100) * circumference;
@@ -60,20 +60,20 @@ function FirstRow() {
   };
 
   const MetricCard = ({ title, value, trend, prevValue }) => {
-    const getColor = (title, value) => {
+    const getColor = (title) => {
       switch(title) {
         case 'AVAILABILITY':
-          return value >= 90 ? '#2563eb' : '#ef4444';  // Blue when good, red when bad
+          return '#2563eb';  // Fixed blue
         case 'PERFORMANCE':
-          return value >= 75 ? '#16a34a' : '#ef4444';  // Green when good, red when bad
+          return '#16a34a';  // Fixed green
         case 'QUALITY':
-          return value >= 70 ? '#f97316' : '#ef4444';  // Orange when good, red when bad
+          return '#f97316';  // Fixed orange
         default:
           return '#2563eb';
       }
     };
 
-    const color = getColor(title, parseInt(value));
+    const color = getColor(title);
     const isPositive = trend.includes('▲');
 
     return (
@@ -137,7 +137,7 @@ function FirstRow() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                 </svg>
-                <span className="text-[#000000] text-xs font-medium">PART NAME</span>
+                <span className=" text-[#2563eb] text-xs font-medium">PART NAME</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] animate-pulse"></div>
@@ -161,7 +161,7 @@ function FirstRow() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h6v4H7V5zm6 6H7v2h6v-2z" clipRule="evenodd" />
                 </svg>
-                <span className="text-[#000000] text-xs font-medium">PART NUMBER</span>
+                <span className="text-[#16a34a] text-xs font-medium">PART NUMBER</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse"></div>
@@ -173,7 +173,7 @@ function FirstRow() {
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
                 </svg>
-                <span className="text-2xl text-gray-800 font-bold">12345678</span>
+                <span className="text-2xl text-gray-800 font-bold">9253010242</span>
               </div>
               <div className="text-sm text-center text-[#16a34a]/70 mt-3">Serial Number</div>
             </div>
@@ -210,7 +210,7 @@ function FirstRow() {
             <div className="w-full border border-gray-200 rounded-lg shadow-sm">
               <MetricCard 
                 title="AVAILABILITY"
-                value="95"
+                value="75"
                 trend="(+10% ▲)"
                 prevValue="vs prev 11.6K"
               />
@@ -218,7 +218,7 @@ function FirstRow() {
             <div className="w-full border border-gray-200 rounded-lg shadow-sm">
               <MetricCard 
                 title="PERFORMANCE"
-                value="80"
+                value="70"
                 trend="(+10% ▲)"
                 prevValue="vs prev 11.6K"
               />
@@ -226,7 +226,7 @@ function FirstRow() {
             <div className="w-full border border-gray-200 rounded-lg shadow-sm">
               <MetricCard 
                 title="QUALITY"
-                value="75"
+                value="100"
                 trend="(+10% ▲)"
                 prevValue="vs prev 11.6K"
               />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaClock, FaEdit, FaTimes, FaArrowRight, FaBullseye, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaClock, FaEdit, FaTimes, FaArrowRight, FaBullseye, FaPlus, FaTrash, FaCheck } from 'react-icons/fa';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 
@@ -19,6 +19,19 @@ const Breadcrumb = () => (
     </span>
     <FaArrowRight className="w-3 h-3" />
     <span className="font-medium text-gray-800">Production Details</span>
+  </div>
+);
+
+// Success message component for reusability
+const SuccessMessage = ({ message }) => (
+  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 
+                  bg-green-50 border border-green-200 text-green-700 px-4 py-2 
+                  rounded-lg shadow-md flex items-center gap-2 
+                  animate-fade-in-up">
+    <div className="bg-green-100 rounded-full p-1">
+      <FaCheck className="w-3 h-3" />
+    </div>
+    <span className="font-medium text-sm">{message}</span>
   </div>
 );
 
@@ -80,6 +93,10 @@ function CycleTimeDetails() {
   const [hasChanges, setHasChanges] = useState(false);
   const [cycleTime, setCycleTime] = useState('360');
   const [targetValue, setTargetValue] = useState('');
+  const [cycleTimeSuccess, setCycleTimeSuccess] = useState(false);
+  const [targetValueSuccess, setTargetValueSuccess] = useState(false);
+  const [rejectionSuccess, setRejectionSuccess] = useState(false);
+  const [stopTimeSuccess, setStopTimeSuccess] = useState(false);
 
   const handleEdit = (field, value) => {
     setEditingField(field);
@@ -177,32 +194,55 @@ function CycleTimeDetails() {
 
   const handleCycleTimeSubmit = () => {
     if (cycleTime) {
+      setCycleTimeSuccess(true);
       toast.success('Cycle time updated successfully!', {
         position: "top-right",
-        autoClose: 2000
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      // Reset success message after 3 seconds
+      setTimeout(() => setCycleTimeSuccess(false), 3000);
+    } else {
+      toast.error('Please enter a cycle time value', {
+        position: "top-right",
+        autoClose: 2000,
       });
     }
   };
 
   const handleTargetSubmit = () => {
     if (targetValue) {
+      setTargetValueSuccess(true);
       toast.success('Target value updated successfully!', {
         position: "top-right",
-        autoClose: 2000
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       });
+      // Reset success message after 3 seconds
+      setTimeout(() => setTargetValueSuccess(false), 3000);
     } else {
       toast.error('Please enter a target value', {
         position: "top-right",
-        autoClose: 2000
+        autoClose: 2000,
       });
     }
   };
 
   const handleSectionSubmit = (section) => {
-    toast.success(`${section} updated successfully!`, {
-      position: "top-right",
-      autoClose: 2000
-    });
+    if (section === 'Rejection details') {
+      setRejectionSuccess(true);
+      setTimeout(() => setRejectionSuccess(false), 3000);
+    } else if (section === 'Stop time details') {
+      setStopTimeSuccess(true);
+      setTimeout(() => setStopTimeSuccess(false), 3000);
+    }
+    toast.success(`${section} updated successfully!`);
   };
 
   const renderField = (section, label, field, value, unit, icon) => (
@@ -258,9 +298,10 @@ function CycleTimeDetails() {
   );
 
   const renderRejectionEntry = (entry) => (
-    <div key={entry.id} className="bg-white p-6 rounded-lg shadow-md mb-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div>
+    <div key={entry.id} className="bg-gray-50 p-6 rounded-lg mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+        {/* Part Number */}
+        <div className="md:col-span-3">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Part Number
           </label>
@@ -276,7 +317,8 @@ function CycleTimeDetails() {
           </select>
         </div>
 
-        <div>
+        {/* Number of Pieces */}
+        <div className="md:col-span-2">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Number of Pieces
           </label>
@@ -294,7 +336,8 @@ function CycleTimeDetails() {
           />
         </div>
 
-        <div>
+        {/* Fault Type */}
+        <div className="md:col-span-3">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Fault Type
           </label>
@@ -310,8 +353,9 @@ function CycleTimeDetails() {
           </select>
         </div>
 
+        {/* Other Fault */}
         {entry.fault === 'Others' && (
-          <div>
+          <div className="md:col-span-3">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Specify Other Fault
             </label>
@@ -325,13 +369,19 @@ function CycleTimeDetails() {
           </div>
         )}
 
+        {/* Delete Button */}
         {rejectionEntries.length > 1 && (
-          <button
-            onClick={() => removeRejectionEntry(entry.id)}
-            className="absolute top-4 right-4 text-red-500 hover:text-red-700 transition-colors"
-          >
-            <FaTrash />
-          </button>
+          <div className="md:col-span-1 flex justify-center">
+            <button
+              onClick={() => removeRejectionEntry(entry.id)}
+              className="px-3 py-2 text-red-500 hover:text-red-700 transition-colors 
+                       hover:bg-red-50 rounded-lg focus:outline-none focus:ring-2 
+                       focus:ring-red-500/20"
+              title="Remove Entry"
+            >
+              <FaTrash className="w-5 h-5" />
+            </button>
+          </div>
         )}
       </div>
     </div>
@@ -482,131 +532,220 @@ function CycleTimeDetails() {
         </div>
       </div>
 
-      {/* Main Content - remains the same */}
+      {/* Main Content with new background */}
       <div className="max-w-6xl mx-auto p-6 space-y-8">
-        {/* Rest of the components remain the same */}
-        <CardWrapper className="p-8 border border-gray-100">
+        <CardWrapper className="p-8 relative bg-white/80 backdrop-blur-sm border border-gray-200/50
+                             bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] 
+                             from-blue-50/50 via-white to-indigo-50/30">
+          <div className="absolute inset-0 bg-grid-blue-500/[0.05] -z-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-100/20 via-transparent to-indigo-100/20 -z-10 rounded-xl"></div>
+          
           <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
             <FaBullseye className="text-blue-600" />
             Time and Target Settings
           </h2>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Enhanced Cycle Time Input */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Cycle Time (seconds)
-              </label>
-              <input
-                type="text"
-                value={cycleTime}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                    setCycleTime(value);
-                  }
-                }}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500/20 
-                         focus:border-blue-500 transition-all duration-200"
-                placeholder="Enter cycle time"
-              />
+            {/* Cycle Time Card */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <FaClock className="text-blue-600 w-5 h-5" />
+                  <h3 className="text-lg font-medium text-gray-800">Cycle Time</h3>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={cycleTime}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                      setCycleTime(value);
+                    }
+                  }}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500/20 
+                           focus:border-blue-500 bg-gray-50/50"
+                  placeholder="Enter cycle time"
+                />
+                
+                <button
+                  onClick={handleCycleTimeSubmit}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 
+                           hover:from-blue-700 hover:to-blue-600 text-white 
+                           font-medium rounded-lg transition duration-300 
+                           shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                >
+                  <FaClock className="w-4 h-4" />
+                  Update Cycle Time
+                </button>
+              </div>
+              
+              {cycleTimeSuccess && (
+                <div className="mt-4 flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg">
+                  <FaCheck className="w-4 h-4" />
+                  <span className="text-sm font-medium">Successfully updated cycle time</span>
+                </div>
+              )}
             </div>
 
-            {/* Enhanced Target Value Input */}
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Target Value
-              </label>
-              <input
-                type="text"
-                value={targetValue}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                    setTargetValue(value);
-                  }
-                }}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg 
-                         focus:outline-none focus:ring-2 focus:ring-blue-500/20 
-                         focus:border-blue-500 transition-all duration-200"
-                placeholder="Enter target value"
-              />
+            {/* Target Value Card */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all duration-300">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-2">
+                  <FaBullseye className="text-blue-600 w-5 h-5" />
+                  <h3 className="text-lg font-medium text-gray-800">Target Value</h3>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  value={targetValue}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                      setTargetValue(value);
+                    }
+                  }}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg 
+                           focus:outline-none focus:ring-2 focus:ring-blue-500/20 
+                           focus:border-blue-500 bg-gray-50/50"
+                  placeholder="Enter target value"
+                />
+                
+                <button
+                  onClick={handleTargetSubmit}
+                  className="w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 
+                           hover:from-blue-700 hover:to-blue-600 text-white 
+                           font-medium rounded-lg transition duration-300 
+                           shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                >
+                  <FaBullseye className="w-4 h-4" />
+                  Update Target Value
+                </button>
+              </div>
+              
+              {targetValueSuccess && (
+                <div className="mt-4 flex items-center gap-2 text-green-600 bg-green-50 p-3 rounded-lg">
+                  <FaCheck className="w-4 h-4" />
+                  <span className="text-sm font-medium">Successfully updated target value</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardWrapper>
+
+        {/* Combined Stop Time and Rejection Details Section */}
+        <CardWrapper className="p-8 relative bg-white/80 backdrop-blur-sm border border-gray-200/50
+                             bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] 
+                             from-blue-50/50 via-white to-indigo-50/30">
+          <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-3 pb-4 
+                      border-b border-gray-200/70 relative">
+            <div className="p-2 bg-red-100 rounded-lg shadow-sm">
+              <FaTimes className="text-red-500 w-5 h-5" />
+            </div>
+            <span>Stop Time and Rejection Details</span>
+            {hasChanges && (
+              <span className="ml-auto text-xs bg-yellow-100 text-yellow-700 px-3 py-1 
+                            rounded-full font-medium animate-pulse shadow-sm">
+                Unsaved Changes
+              </span>
+            )}
+          </h2>
+          
+          <div className="space-y-8">
+            {/* Rejection Entries */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center gap-3">
+                <div className="p-1.5 bg-blue-100 rounded-lg">
+                  <FaTimes className="text-blue-500 w-4 h-4" />
+                </div>
+                Rejection Details
+                <span className="text-sm text-gray-500 font-normal ml-2">
+                  ({rejectionEntries.length} {rejectionEntries.length === 1 ? 'entry' : 'entries'})
+                </span>
+              </h3>
+              <div className="space-y-4">
+                {rejectionEntries.map(entry => renderRejectionEntry(entry))}
+              </div>
+              <button
+                onClick={addRejectionEntry}
+                className="flex items-center gap-2 px-5 py-2.5 mt-4 text-blue-600 hover:text-blue-700 
+                         font-medium transition-all duration-300 hover:bg-blue-50 rounded-lg
+                         border border-blue-200 hover:border-blue-300 shadow-sm hover:shadow"
+              >
+                <FaPlus className="animate-bounce" /> Add Another Rejection Entry
+              </button>
+            </div>
+
+            {/* Stop Time Entries */}
+            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+              <h3 className="text-lg font-medium text-gray-800 mb-4 flex items-center gap-3">
+                <div className="p-1.5 bg-indigo-100 rounded-lg">
+                  <FaClock className="text-indigo-500 w-4 h-4" />
+                </div>
+                Stop Time Details
+                <span className="text-sm text-gray-500 font-normal ml-2">
+                  ({stopTimeEntries.length} {stopTimeEntries.length === 1 ? 'entry' : 'entries'})
+                </span>
+              </h3>
+              <div className="space-y-4">
+                {stopTimeEntries.map(entry => renderStopTimeEntry(entry))}
+              </div>
+              <button
+                onClick={addStopTimeEntry}
+                className="flex items-center gap-2 px-5 py-2.5 mt-4 text-indigo-600 hover:text-indigo-700 
+                         font-medium transition-all duration-300 hover:bg-indigo-50 rounded-lg
+                         border border-indigo-200 hover:border-indigo-300 shadow-sm hover:shadow"
+              >
+                <FaPlus className="animate-bounce" /> Add Stop Time Entry
+              </button>
             </div>
           </div>
 
-          {/* Enhanced Submit Button */}
-          <div className="flex justify-end mt-6">
+          {/* Common Submit Button */}
+          <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
             <button
               onClick={() => {
-                handleCycleTimeSubmit();
-                handleTargetSubmit();
+                handleSectionSubmit('Rejection details');
+                handleSectionSubmit('Stop time details');
               }}
-              className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-500 
-                       hover:from-green-700 hover:to-green-600 text-white 
-                       font-medium rounded-lg transition duration-300 
-                       min-w-[120px] shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 
+                        hover:from-blue-700 hover:to-blue-600 text-white font-medium rounded-lg
+                        shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5
+                        flex items-center gap-2"
             >
-              Update Values
+              <FaCheck className="w-4 h-4" />
+              Submit All Details
             </button>
           </div>
-        </CardWrapper>
 
-        <CardWrapper className="p-8 border border-gray-100">
-          <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <FaTimes className="text-red-500" />
-            Rejection Details
-          </h3>
-          
-          <div className="space-y-4">
-            {rejectionEntries.map(entry => renderRejectionEntry(entry))}
-          </div>
-          
-          <div className="flex items-center justify-between mt-6">
-            <button
-              onClick={addRejectionEntry}
-              className="flex items-center gap-2 px-5 py-2.5 text-blue-600 hover:text-blue-700 
-                       font-medium transition-colors hover:bg-blue-50 rounded-lg"
-            >
-              <FaPlus className="animate-bounce" /> Add Another Entry
-            </button>
-            <button
-              onClick={() => handleSectionSubmit('Rejection details')}
-              className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-500 
-                       hover:from-green-700 hover:to-green-600 text-white 
-                       font-medium rounded-lg transition duration-300 shadow-md 
-                       hover:shadow-lg transform hover:-translate-y-0.5"
-            >
-              Submit Rejection Details
-            </button>
-          </div>
-        </CardWrapper>
-
-        <CardWrapper className="p-8 border border-gray-100">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <FaClock className="text-orange-500" />
-            Stop Time Details
-          </h2>
-          <div className="space-y-4">
-            {stopTimeEntries.map(entry => renderStopTimeEntry(entry))}
-          </div>
-          <div className="flex items-center justify-between mt-6">
-            <button
-              onClick={addStopTimeEntry}
-              className="flex items-center gap-2 px-5 py-2.5 text-blue-600 hover:text-blue-700 
-                       font-medium transition-colors hover:bg-blue-50 rounded-lg"
-            >
-              <FaPlus className="animate-bounce" /> Add Stop Time Entry
-            </button>
-            <button
-              onClick={() => handleSectionSubmit('Stop time details')}
-              className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-500 
-                       hover:from-green-700 hover:to-green-600 text-white 
-                       font-medium rounded-lg transition duration-300 shadow-md 
-                       hover:shadow-lg transform hover:-translate-y-0.5"
-            >
-              Submit Stop Time Details
-            </button>
-          </div>
+          {/* Success Messages with improved styling */}
+          {(rejectionSuccess || stopTimeSuccess) && (
+            <div className="absolute bottom-4 right-4 space-y-2">
+              {rejectionSuccess && (
+                <div className="bg-green-50 border border-green-100 text-green-700 px-4 py-2 
+                            rounded-lg shadow-lg flex items-center gap-2 animate-fade-in-up">
+                  <div className="bg-green-100 rounded-full p-1">
+                    <FaCheck className="w-3 h-3" />
+                  </div>
+                  <span className="font-medium text-sm">Successfully submitted rejection details</span>
+                </div>
+              )}
+              {stopTimeSuccess && (
+                <div className="bg-green-50 border border-green-100 text-green-700 px-4 py-2 
+                            rounded-lg shadow-lg flex items-center gap-2 animate-fade-in-up">
+                  <div className="bg-green-100 rounded-full p-1">
+                    <FaCheck className="w-3 h-3" />
+                  </div>
+                  <span className="font-medium text-sm">Successfully submitted stop time details</span>
+                </div>
+              )}
+            </div>
+          )}
         </CardWrapper>
       </div>
     </div>
