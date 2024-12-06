@@ -1,178 +1,202 @@
 import React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { PieChart, Pie, Cell, Tooltip } from 'recharts';
+import { FaBullseye, FaChartLine } from 'react-icons/fa';
+
+// Professional color constants
+const PLAN_COLOR = '#ef4444';  // Red
+const ACTUAL_COLOR = '#16a34a'; // Rich green
+const REJECT_COLOR = '#ef4444';  // Red for rejects
+
+// Update the line colors and constants
+const LINE_COLOR_1 = '#16a34a';  // Green
+const LINE_COLOR_2 = '#ef4444';  // Red
 
 function SecondRow() {
   const pieData = [
-    { name: 'Text A', value: 30, color: '#E97451' },
-    { name: 'Text B', value: 25, color: '#FDB347' },
-    { name: 'Text C', value: 20, color: '#FFE5B4' },
-    { name: 'Text D', value: 20, color: '#FFB347' },
-    { name: 'Text E', value: 5, color: '#FFA500' },
+    { name: 'Plan', value: 60, color: '#E97451' },
+    { name: 'Actual', value: 40, color: '#FDB347' }
   ];
 
   const lineData = [
     { name: '', value1: null, value2: null },
-    { name: 'Jan 22', value1: 38, value2: 25 },
-    { name: 'Feb 22', value1: 40, value2: 35 },
-    { name: 'Mar 22', value1: 15, value2: 25 },
-    { name: 'Apr 22', value1: 40, value2: 50 },
-    { name: 'May 22', value1: 55, value2: 45 },
-    { name: 'Jun 22', value1: 20, value2: 30 }
+    { name: 'Mon', value1: 280, value2: 220 },
+    { name: 'Tue', value1: 300, value2: 250 },
+    { name: 'Wed', value1: 180, value2: 220 },
+    { name: 'Thu', value1: 320, value2: 340 },
+    { name: 'Fri', value1: 350, value2: 330 },
+    { name: 'Sat', value1: 260, value2: 280 },
+    { name: 'Sun', value1: 290, value2: 310 }
   ];
 
-  const ValueBox = ({ title, value }) => (
-    <div className="bg-white h-full border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-      <div className="border-b border-[#8B4513] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-orange-50">
-        <span className="text-[#8B4513] text-xs font-medium">{title}</span>
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#8B4513] opacity-50" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z" clipRule="evenodd" />
-        </svg>
-      </div>
-      <div className="py-8 px-3 flex flex-col items-center justify-center">
-        <div className="flex items-center gap-2 mb-2">
-          {title === 'PLAN' ? (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#E97451]" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zm0 16a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-[#E97451]" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-          )}
-          <span className="text-3xl text-gray-800 font-bold">{value}</span>
+  const ValueBox = ({ title, value }) => {
+    const boxColor = title === 'PLAN' ? PLAN_COLOR : ACTUAL_COLOR;
+    
+    return (
+      <div className="bg-white h-full border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+        <div className={`border-b py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white`}
+             style={{ borderColor: boxColor }}>
+          <span className="text-xs font-medium flex items-center gap-2" style={{ color: boxColor }}>
+            {title === 'PLAN' ? <FaBullseye /> : <FaChartLine />}
+            {title}
+          </span>
         </div>
-        <div className="text-xs text-gray-500">Units per hour</div>
-        <div className="mt-4 w-full bg-gray-100 rounded-full h-1.5">
-          <div 
-            className="bg-[#E97451] h-1.5 rounded-full transition-all duration-500"
-            style={{ width: title === 'PLAN' ? '100%' : `${(parseInt(value)/360)*100}%` }}
-          ></div>
+        <div className="h-[150px] flex items-center justify-center p-4">
+          <div className="text-center w-full">
+            <div className="rounded-lg p-4 shadow-inner" 
+                 style={{ backgroundColor: `${boxColor}10` }}>
+              <span className="text-4xl font-bold block mb-1" style={{ color: boxColor }}>{value}</span>
+              <div className="text-xs text-gray-500">Units per hour</div>
+            </div>
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <div className="w-2 h-2 rounded-full" style={{ backgroundColor: boxColor }}></div>
+              <span className="text-xs font-medium" style={{ color: boxColor }}>
+                {title === 'PLAN' ? 'Target Rate' : 'Current Rate'}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
+
+  const PieChartSection = () => {
+    const data = [
+      { name: 'Good Parts', value: 850, color: ACTUAL_COLOR },
+      { name: 'Rejected Parts', value: 150, color: REJECT_COLOR }
+    ];
+
+    return (
+      <div className="col-span-3">
+        <div className="bg-white p-2 h-[210px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
+          <div className="px-2 flex items-center justify-between">
+            <span className="text-[#2563eb] text-xs font-medium">PARTS COMPARISON</span>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: ACTUAL_COLOR }}></div>
+                <span className="text-xs text-gray-500">Good Parts (850)</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: REJECT_COLOR }}></div>
+                <span className="text-xs text-gray-500">Rejected Parts (150)</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-grow flex items-center justify-center">
+            <PieChart width={200} height={180}>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={70}
+                paddingAngle={5}
+                dataKey="value"
+                label={({
+                  cx,
+                  cy,
+                  midAngle,
+                  innerRadius,
+                  outerRadius,
+                  value,
+                  index
+                }) => {
+                  const RADIAN = Math.PI / 180;
+                  const radius = 25 + innerRadius + (outerRadius - innerRadius);
+                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      className="text-xs font-medium"
+                      fill={data[index].color}
+                      textAnchor={x > cx ? 'start' : 'end'}
+                      dominantBaseline="central"
+                    >
+                      {`${value}`}
+                    </text>
+                  );
+                }}
+              >
+                {data.map((entry, index) => (
+                  <Cell 
+                    key={`cell-${index}`} 
+                    fill={entry.color}
+                    className="transition-all duration-300 hover:opacity-80"
+                  />
+                ))}
+              </Pie>
+              <Tooltip 
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    return (
+                      <div className="bg-white p-2 border border-gray-200 rounded-md shadow-sm">
+                        <p className="text-xs font-medium" style={{ color: payload[0].payload.color }}>
+                          {payload[0].name}: {payload[0].value}
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+            </PieChart>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="px-4 py-2">
       <div className="grid grid-cols-12 gap-3">
         {/* Pie Chart */}
-        <div className="col-span-3">
-          <div className="bg-white p-2 h-[210px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:border-[#8B4513]">
-            <div className="flex items-center justify-between border-b border-orange-100 pb-2 mb-2">
-              <div className="flex items-center gap-2">
-                <div className="w-1 h-4 bg-[#8B4513] rounded-full"></div>
-                <span className="text-[#8B4513] text-xs font-medium">COMPARISON OF PARTS</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#8B4513] opacity-40"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#8B4513] opacity-60"></div>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#8B4513]"></div>
-              </div>
-            </div>
-            <div className="flex flex-col h-[165px]">
-              <div className="flex-grow flex items-center justify-center">
-                <PieChart width={160} height={120}>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={0}
-                    outerRadius={45}
-                    paddingAngle={2}
-                    dataKey="value"
-                    labelLine={false}
-                    label={({ cx, cy, midAngle, innerRadius, outerRadius, value, index }) => {
-                      const RADIAN = Math.PI / 180;
-                      const radius = outerRadius * 1.2;
-                      const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                      const y = cy + radius * Math.sin(-midAngle * RADIAN);
-                      
-                      return (
-                        <text
-                          x={x}
-                          y={y}
-                          fill="#666666"
-                          textAnchor={x > cx ? 'start' : 'end'}
-                          dominantBaseline="central"
-                          fontSize={10}
-                        >
-                          {`${value}%`}
-                        </text>
-                      );
-                    }}
-                  >
-                    {pieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value) => [`${value}%`, 'Percentage']}
-                    contentStyle={{
-                      backgroundColor: 'white',
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      padding: '4px 8px',
-                      fontSize: '12px',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                    }}
-                    itemStyle={{ color: '#666666' }}
-                    labelStyle={{ color: '#8B4513', fontWeight: 500 }}
-                  />
-                </PieChart>
-              </div>
-              <div className="flex justify-center items-center gap-2 px-2 py-1.5 bg-gradient-to-r from-orange-50/30 via-orange-50/50 to-orange-50/30 rounded-lg">
-                {pieData.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-center gap-1.5 hover:bg-white/80 px-2 py-1 rounded-full transition-all duration-300 cursor-pointer group"
-                  >
-                    <div 
-                      className="w-2.5 h-2.5 rounded-full group-hover:scale-110 transition-transform"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="text-[10px] text-gray-600 font-medium whitespace-nowrap">
-                      {`Part ${item.name.slice(-1)}`}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        <PieChartSection />
 
         {/* Plan/Actual */}
         <div className="col-span-3 grid grid-cols-2 gap-2">
-          <div className="bg-white h-[210px] border border-gray-200 rounded-lg shadow-sm">
+          <div className="h-[210px]">
             <ValueBox title="PLAN" value="360" />
           </div>
-          <div className="bg-white h-[210px] border border-gray-200 rounded-lg shadow-sm">
+          <div className="h-[210px]">
             <ValueBox title="ACTUAL" value="270" />
           </div>
         </div>
 
         {/* Line Chart */}
         <div className="col-span-6">
-          <div className="bg-white p-2 h-[260px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 -mt-[50px]">
+          <div className="bg-white p-2 h-[287px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 -mt-[75px]">
             <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-2">
-                <div className="w-1 h-4 bg-[#8B4513] rounded-full"></div>
-                <span className="text-[#8B4513] text-sm font-medium">OEE METRICS</span>
+              <div className="flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-lg border border-[#2563eb]/20">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                </svg>
+                <span className="text-[#2563eb] text-xs font-medium">OEE METRICS</span>
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-lg border border-[#2563eb]/20">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
+                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+                  </svg>
                   <span className="text-xs text-gray-600 font-medium">Title 1</span>
-                  <select className="text-xs text-gray-600 border-b border-gray-300 px-2 py-1 bg-white hover:border-[#8B4513] focus:outline-none focus:border-[#8B4513] transition-colors">
+                  <select className="text-xs text-gray-600 bg-transparent border-b border-gray-300 px-1 hover:border-[#2563eb] focus:outline-none focus:border-[#2563eb] transition-colors">
                     <option>Metric 1</option>
                     <option>Metric 2</option>
                   </select>
                 </div>
-                <div className="h-4 w-px bg-gray-300"></div>
-                <div className="flex items-center gap-1.5">
+                <div className="h-4 w-px bg-gray-200"></div>
+                <div className="flex items-center gap-1.5 bg-green-50 px-3 py-1.5 rounded-lg border border-[#16a34a]/20">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+                  </svg>
                   <span className="text-xs text-gray-600 font-medium">Title 2</span>
-                  <select className="text-xs text-gray-600 border-b border-gray-300 px-2 py-1 bg-white hover:border-[#8B4513] focus:outline-none focus:border-[#8B4513] transition-colors">
-                  <option>Metric 1</option>
-                  <option>Metric 2</option>
+                  <select className="text-xs text-gray-600 bg-transparent border-b border-gray-300 px-1 hover:border-[#16a34a] focus:outline-none focus:border-[#16a34a] transition-colors">
+                    <option>Metric 1</option>
+                    <option>Metric 2</option>
                   </select>
                 </div>
               </div>
@@ -180,42 +204,42 @@ function SecondRow() {
 
             <div className="flex gap-4 mb-4">
               <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-[#ff7b5c]"></div>
-                <span className="text-xs text-gray-500">Dataset 1</span>
+                <div className="w-2 h-2 rounded-full bg-[#16a34a]"></div>
+                <span className="text-xs text-gray-500">Actual</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-[#ffb5a0]"></div>
-                <span className="text-xs text-gray-500">Dataset 2</span>
+                <div className="w-2 h-2 rounded-full bg-[#ef4444]"></div>
+                <span className="text-xs text-gray-500">Plan</span>
               </div>
             </div>
 
             <div className="h-[200px] mt-4">
               <LineChart
                 width={590}
-                height={180}
+                height={200}
                 series={[
                   {
                     data: lineData.map(item => item.value1),
                     area: true,
-                    color: '#ff7b5c',
+                    color: LINE_COLOR_1,
                     showMark: true,
                     strokeWidth: 2,
-                    valueFormatter: (value) => `${Math.abs(value)}%`,
+                    valueFormatter: (value) => `${value || 0}`,
                     areaStyle: {
-                      fill: '#ff7b5c',
-                      opacity: 0.3
+                      fill: LINE_COLOR_1,
+                      opacity: 0.1
                     }
                   },
                   {
                     data: lineData.map(item => item.value2),
                     area: true,
-                    color: '#ffb5a0',
+                    color: LINE_COLOR_2,
                     showMark: true,
                     strokeWidth: 2,
-                    valueFormatter: (value) => `${Math.abs(value)}%`,
+                    valueFormatter: (value) => `${value || 0}`,
                     areaStyle: {
-                      fill: '#ffb5a0',
-                      opacity: 0.3
+                      fill: LINE_COLOR_2,
+                      opacity: 0.1
                     }
                   }
                 ]}
@@ -224,9 +248,10 @@ function SecondRow() {
                   scaleType: 'point',
                   tickLabelStyle: {
                     fontSize: 11,
-                    fill: '#666'
+                    fill: '#666',
+                    fontWeight: 500
                   },
-                  valueFormatter: (value) => value.replace('-', ' '),
+                  valueFormatter: (value) => value,
                   position: 'bottom',
                   axisLine: { 
                     strokeWidth: 1,
@@ -236,9 +261,9 @@ function SecondRow() {
                   padding: { left: -20, right: -20 }
                 }]}
                 yAxis={[{
-                  min: 10,
-                  max: 60,
-                  tickValues: [10, 20, 30, 40, 50, 60],
+                  min: 0,
+                  max: 360,
+                  tickValues: [0, 60, 120, 180, 240, 300, 360],
                   tickLabelStyle: {
                     fontSize: 11,
                     fill: '#666'
@@ -249,8 +274,8 @@ function SecondRow() {
                     opacity: 0.2
                   },
                   tickSize: 0,
-                  valueFormatter: (value) => Math.abs(value),
-                  tickInterval: 10
+                  valueFormatter: (value) => value,
+                  tickInterval: 60
                 }]}
                 margin={{ left: 35, right: 10, top: 15, bottom: 25 }}
                 sx={{

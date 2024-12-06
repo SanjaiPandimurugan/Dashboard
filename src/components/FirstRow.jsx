@@ -7,9 +7,7 @@ function FirstRow() {
     const rotation = (percentage / 100) * 180 - 90;
 
     const getColor = (value) => {
-      if (value >= 80) return "#E97451";
-      if (value >= 60) return "#FDB347";
-      return "#FFB347";
+      return "#22c55e"; // Success green
     };
 
     const gaugeColor = getColor(percentage);
@@ -41,27 +39,11 @@ function FirstRow() {
             strokeWidth="8"
             className="transition-all duration-1000 ease-in-out"
           />
-
-          {/* Pointer */}
-          <g className="transform rotate-90">
-            <g transform={`rotate(${rotation})`}>
-              <circle cx="0" cy="0" r="3" fill={gaugeColor}/>
-              <line
-                x1="0"
-                y1="0"
-                x2="25"
-                y2="0"
-                stroke={gaugeColor}
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </g>
-          </g>
         </svg>
 
         {/* Center text */}
         <div className="absolute flex flex-col items-center">
-          <div className="text-2xl font-bold" style={{ color: gaugeColor }}>
+          <div className="text-2xl font-bold text-success">
             {percentage}%
           </div>
           <div className="text-[10px] text-gray-500 -mt-1">OEE</div>
@@ -81,13 +63,13 @@ function FirstRow() {
     const getColor = (title, value) => {
       switch(title) {
         case 'AVAILABILITY':
-          return value >= 90 ? '#E97451' : '#FDB347';
+          return value >= 90 ? '#2563eb' : '#ef4444';  // Blue when good, red when bad
         case 'PERFORMANCE':
-          return value >= 75 ? '#E97451' : '#FDB347';
+          return value >= 75 ? '#16a34a' : '#ef4444';  // Green when good, red when bad
         case 'QUALITY':
-          return value >= 70 ? '#E97451' : '#FDB347';
+          return value >= 70 ? '#f97316' : '#ef4444';  // Orange when good, red when bad
         default:
-          return '#E97451';
+          return '#2563eb';
       }
     };
 
@@ -98,11 +80,12 @@ function FirstRow() {
       <div className="bg-white p-2 h-full border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
         <div className="flex items-center justify-between mb-1">
           <div className="flex items-center gap-1.5">
-            <div className="w-1 h-3 bg-[#8B4513] rounded-full"></div>
-            <span className="text-[#8B4513] text-xs font-medium">{title}</span>
+            <div className="w-1 h-3 rounded-full" style={{ backgroundColor: color }}></div>
+            <span className="text-xs font-medium" style={{ color }}>{title}</span>
           </div>
           <div className="flex items-center gap-1">
-            <div className={`w-1.5 h-1.5 rounded-full ${isPositive ? 'bg-green-500' : 'bg-red-500'} animate-pulse`}></div>
+            <div className={`w-1.5 h-1.5 rounded-full ${isPositive ? 'animate-pulse' : ''}`} 
+                 style={{ backgroundColor: color }}></div>
             <span className="text-[9px] text-gray-500">Live</span>
           </div>
         </div>
@@ -110,7 +93,7 @@ function FirstRow() {
         <div className="flex items-baseline justify-between mt-2">
           <div className="flex items-baseline gap-1.5">
             <span className="text-2xl font-bold" style={{ color }}>{value}%</span>
-            <span className={`text-xs ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
+            <span className="text-xs" style={{ color }}>
               {trend}
             </span>
           </div>
@@ -146,69 +129,53 @@ function FirstRow() {
   return (
     <div className="px-4 py-2">
       <div className="grid grid-cols-12 gap-3">
-        {/* Part Info Section */}
+        {/* Part Info Section - now using full width */}
         <div className="col-span-4 grid grid-cols-2 gap-2">
-          <div className="bg-white h-[110px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:border-[#8B4513]">
-            <div className="border-b border-[#8B4513] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-orange-50">
-              <span className="text-[#8B4513] text-xs font-medium">PART NAME</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#8B4513] opacity-50" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="py-4 px-3 group-hover:bg-orange-50 transition-colors">
-              <div className="flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#E97451]" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+          <div className="bg-white h-[164px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:border-[#2563eb]">
+            <div className="border-b border-[#2563eb] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-blue-50">
+              <div className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
                 </svg>
-                <span className="text-lg text-gray-800 font-bold">CYLINDER</span>
-              </div>
-              <div className="text-xs text-center text-gray-500 mt-1">Manufacturing Part</div>
-            </div>
-          </div>
-
-          <div className="bg-white h-[110px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:border-[#8B4513]">
-            <div className="border-b border-[#8B4513] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-orange-50">
-              <span className="text-[#8B4513] text-xs font-medium">PART NUMBER</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#8B4513] opacity-50" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
-              </svg>
-            </div>
-            <div className="py-4 px-3 group-hover:bg-orange-50 transition-colors">
-              <div className="flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#E97451]" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
-                </svg>
-                <span className="text-lg text-gray-800 font-bold">12345678</span>
-              </div>
-              <div className="text-xs text-center text-gray-500 mt-1">Serial Number</div>
-            </div>
-          </div>
-
-          {/* Date and Shift boxes */}
-          <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-[45px] group hover:border-[#8B4513]">
-            <div className="h-full flex items-center justify-between px-3">
-              <div className="flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#E97451]" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                </svg>
-                <span className="text-[#8B4513] text-xs font-medium">DATE</span>
-              </div>
-              <span className="text-xs text-gray-600 group-hover:text-[#E97451] transition-colors">01-01-2024</span>
-            </div>
-          </div>
-
-          <div className="bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 h-[45px] group hover:border-[#8B4513]">
-            <div className="h-full flex items-center justify-between px-3">
-              <div className="flex items-center gap-1.5">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#E97451]" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                </svg>
-                <span className="text-[#8B4513] text-xs font-medium">SHIFT</span>
+                <span className="text-[#000000] text-xs font-medium">PART NAME</span>
               </div>
               <div className="flex items-center gap-1">
-                <span className="text-xs text-gray-600 group-hover:text-[#E97451] transition-colors">SHIFT I</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#E97451] animate-pulse"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] animate-pulse"></div>
+                <span className="text-[9px] text-[#2563eb]">Active</span>
               </div>
+            </div>
+            <div className="py-6 px-3 group-hover:bg-blue-50/30 transition-colors">
+              <div className="flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+                </svg>
+                <span className="text-2xl text-gray-800 font-bold">CYLINDER</span>
+              </div>
+              <div className="text-sm text-center text-[#2563eb]/70 mt-3">Manufacturing Part</div>
+            </div>
+          </div>
+
+          <div className="bg-white h-[164px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:border-[#16a34a]">
+            <div className="border-b border-[#16a34a] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-green-50">
+              <div className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h6v4H7V5zm6 6H7v2h6v-2z" clipRule="evenodd" />
+                </svg>
+                <span className="text-[#000000] text-xs font-medium">PART NUMBER</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse"></div>
+                <span className="text-[9px] text-[#16a34a]">In Production</span>
+              </div>
+            </div>
+            <div className="py-6 px-3 group-hover:bg-green-50/30 transition-colors">
+              <div className="flex items-center justify-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                </svg>
+                <span className="text-2xl text-gray-800 font-bold">12345678</span>
+              </div>
+              <div className="text-sm text-center text-[#16a34a]/70 mt-3">Serial Number</div>
             </div>
           </div>
         </div>
@@ -216,11 +183,17 @@ function FirstRow() {
         {/* OEE Gauge */}
         <div className="col-span-2">
           <div className="bg-white p-2 h-[164px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
-            <div className="px-2 flex items-center justify-between">
-              <span className="text-[#8B4513] text-xs font-medium">OEE</span>
-              <div className="flex items-center gap-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-[9px] text-gray-500">Live</span>
+            <div className="px-2 flex items-center justify-between border-b border-gray-100 pb-2">
+              <div className="flex items-center gap-2">
+                <div className="w-1 h-4 bg-gradient-to-b from-[#2563eb] to-blue-400 rounded-full"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                </svg>
+                <span className="text-[#2563eb] text-xs font-semibold tracking-wide">OEE</span>
+              </div>
+              <div className="flex items-center gap-2 bg-blue-50/50 px-2 py-0.5 rounded-full">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse"></div>
+                <span className="text-[9px] text-[#2563eb]/70 font-medium">Live</span>
               </div>
             </div>
             <div className="py-2 px-2">

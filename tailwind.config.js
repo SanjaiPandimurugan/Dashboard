@@ -6,13 +6,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'brown': {
-          DEFAULT: '#8B4513',
-        },
-        'orange': {
-          DEFAULT: '#f97316',
-          light: '#FFF0E6',
-        },
+        'primary': '#8B4513',
+        'secondary': '#E97451',
+        'success': '#22c55e',
       }
     },
   },
