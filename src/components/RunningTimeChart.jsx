@@ -36,7 +36,7 @@ function RunningTimeChart() {
   };
 
   return (
-    <div className="px-4 py-2">
+    <div className="px-4 py-0">
       <div className="bg-white p-2 h-[190px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
         <div className="flex justify-between items-center mb-3 border-b border-gray-100 pb-2">
           <div className="flex items-center gap-2">
