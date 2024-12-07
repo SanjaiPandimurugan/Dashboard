@@ -12,7 +12,7 @@ function RunningTimeChart() {
     { hour: '7', value: 125 },
     { hour: '8', value: 88 },
     { hour: '9', value: 135 },
-    { hour: '10', value: 110 }
+    { hour: '10'}
   ];
 
   const threshold = 103;

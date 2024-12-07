@@ -222,19 +222,19 @@ function FirstRow() {
           <div className="bg-white p-2 h-[164px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
             <div className="px-2 flex items-center justify-between border-b border-gray-100 pb-2">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-4 bg-gradient-to-b from-[#2563eb] to-blue-400 rounded-full"></div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
+                <div className="w-1 h-4 bg-gradient-to-b from-[#f97316] to-orange-400 rounded-full"></div>
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#f97316]" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
-                <span className="text-[#2563eb] text-xs font-semibold tracking-wide">OEE</span>
+                <span className="text-[#f97316]text-xs font-semibold tracking-wide">OEE</span>
               </div>
-              <div className="flex items-center gap-2 bg-blue-50/50 px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-2 bg-orange-50/50 px-2 py-0.5 rounded-full">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#16a34a] animate-pulse"></div>
-                <span className="text-[9px] text-[#2563eb]/70 font-medium">Live</span>
+                <span className="text-[9px] text-[#f97316]/70 font-medium">Live</span>
               </div>
             </div>
-            <div className="py-2 px-2">
-              <div className="relative h-[100px] flex items-center justify-center">
+            <div className="py-1 px-2">
+              <div className="relative h-[100px] flex items-center justify-center -mt-1">
                 <OEEGauge />
               </div>
             </div>

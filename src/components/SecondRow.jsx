@@ -46,7 +46,7 @@ function SecondRow() {
             <div className="rounded-lg p-4 shadow-inner" 
                  style={{ backgroundColor: `${boxColor}10` }}>
               <span className="text-4xl font-bold block mb-1" style={{ color: boxColor }}>{value}</span>
-              <div className="text-xs text-gray-500">Units per hour</div>
+              <div className="text-xs text-gray-500">Units per Shift</div>
             </div>
             <div className="mt-3 flex items-center justify-center gap-2">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: boxColor }}></div>
@@ -62,8 +62,8 @@ function SecondRow() {
 
   const PieChartSection = () => {
     const data = [
-      { name: 'Good Parts', value: 850, color: ACTUAL_COLOR },
-      { name: 'Rejected Parts', value: 150, color: REJECT_COLOR }
+      { name: '9253010242', value: 850, color: ACTUAL_COLOR },
+      { name: '9253010243', value: 150, color: REJECT_COLOR }
     ];
 
     return (
@@ -74,11 +74,11 @@ function SecondRow() {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: ACTUAL_COLOR }}></div>
-                <span className="text-xs text-gray-500">Good Parts (850)</span>
+                <span className="text-xs text-gray-500">9253010242</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: REJECT_COLOR }}></div>
-                <span className="text-xs text-gray-500">Rejected Parts (150)</span>
+                <span className="text-xs text-gray-500">9253010243</span>
               </div>
             </div>
           </div>
