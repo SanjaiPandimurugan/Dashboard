@@ -169,54 +169,31 @@ function SecondRow() {
         {/* Line Chart */}
         <div className="col-span-6">
           <div className="bg-white p-2 h-[287px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 -mt-[75px]">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-2">
               <div className="flex items-center gap-2 bg-blue-50 px-3 py-1.5 rounded-lg border border-[#2563eb]/20">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
                 </svg>
                 <span className="text-[#2563eb] text-xs font-medium">OEE METRICS</span>
               </div>
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 bg-blue-50 px-3 py-1.5 rounded-lg border border-[#2563eb]/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
-                    <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
-                  </svg>
-                  <span className="text-xs text-gray-600 font-medium">Title 1</span>
-                  <select className="text-xs text-gray-600 bg-transparent border-b border-gray-300 px-1 hover:border-[#2563eb] focus:outline-none focus:border-[#2563eb] transition-colors">
-                    <option>Metric 1</option>
-                    <option>Metric 2</option>
-                  </select>
-                </div>
-                <div className="h-4 w-px bg-gray-200"></div>
-                <div className="flex items-center gap-1.5 bg-green-50 px-3 py-1.5 rounded-lg border border-[#16a34a]/20">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                  </svg>
-                  <span className="text-xs text-gray-600 font-medium">Title 2</span>
-                  <select className="text-xs text-gray-600 bg-transparent border-b border-gray-300 px-1 hover:border-[#16a34a] focus:outline-none focus:border-[#16a34a] transition-colors">
-                    <option>Metric 1</option>
-                    <option>Metric 2</option>
-                  </select>
-                </div>
-              </div>
-            </div>
 
-            <div className="flex gap-4 mb-4">
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-[#16a34a]"></div>
-                <span className="text-xs text-gray-500">Actual</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-[#ef4444]"></div>
-                <span className="text-xs text-gray-500">Plan</span>
+              <div className="flex items-center gap-4 px-4 py-1.5 bg-gray-50 rounded-lg border border-gray-100">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-[#16a34a]"></div>
+                  <span className="text-xs font-medium text-gray-600">PLAN</span>
+                </div>
+                <div className="w-px h-4 bg-gray-200"></div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-full bg-[#ef4444]"></div>
+                  <span className="text-xs font-medium text-gray-600">ACTUAL</span>
+                </div>
               </div>
             </div>
 
             <div className="h-[200px] mt-4">
               <LineChart
                 width={590}
-                height={200}
+                height={230}
                 series={[
                   {
                     data: lineData.map(item => item.value1),

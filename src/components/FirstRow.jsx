@@ -134,10 +134,13 @@ function FirstRow() {
           <div className="bg-white h-[164px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:border-[#2563eb]">
             <div className="border-b border-[#2563eb] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-blue-50">
               <div className="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#2563eb]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20.91 8.84 8.56 2.23a1.93 1.93 0 0 0-1.81 0L3.1 4.13a2.12 2.12 0 0 0-.05 3.69l12.22 6.93a2 2 0 0 0 1.94 0L21 12.51a2.12 2.12 0 0 0-.09-3.67Z"/>
+                  <path d="m3.09 8.84 12.35-6.61a1.93 1.93 0 0 1 1.81 0l3.65 1.9a2.12 2.12 0 0 1 .1 3.69L8.73 14.75a2 2 0 0 1-1.94 0L3 12.51a2.12 2.12 0 0 1 .09-3.67Z"/>
+                  <line x1="12" y1="22" x2="12" y2="13"/>
+                  <path d="M20 13.5v3.37a2.06 2.06 0 0 1-1.11 1.83l-6 3.08a1.93 1.93 0 0 1-1.78 0l-6-3.08A2.06 2.06 0 0 1 4 16.87V13.5"/>
                 </svg>
-                <span className=" text-[#2563eb] text-xs font-medium">PART NAME</span>
+                <span className="text-[#2563eb] text-xs font-medium">PART NAME</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#2563eb] animate-pulse"></div>
@@ -146,8 +149,21 @@ function FirstRow() {
             </div>
             <div className="py-6 px-3 group-hover:bg-blue-50/30 transition-colors">
               <div className="flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#2563eb]" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-5 w-5 text-[#2563eb]" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 22c-4.97 0-9-1.79-9-4v-3.6"/>
+                  <path d="M12 16c-4.97 0-9-1.79-9-4"/>
+                  <path d="M12 10c-4.97 0-9-1.79-9-4s4.03-4 9-4 9 1.79 9 4-4.03 4-9 4Z"/>
+                  <path d="M21 12v3.6"/>
+                  <path d="M12 16c4.97 0 9-1.79 9-4"/>
                 </svg>
                 <span className="text-2xl text-gray-800 font-bold">CYLINDER</span>
               </div>
@@ -158,8 +174,14 @@ function FirstRow() {
           <div className="bg-white h-[164px] border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden group hover:border-[#16a34a]">
             <div className="border-b border-[#16a34a] py-3 px-3 flex items-center justify-between bg-gradient-to-r from-white to-green-50">
               <div className="flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V4zm3 1h6v4H7V5zm6 6H7v2h6v-2z" clipRule="evenodd" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[#16a34a]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <path d="M3 15h6"/>
+                  <path d="M3 18h6"/>
+                  <path d="M11 12h4"/>
+                  <path d="M11 15h4"/>
+                  <path d="M11 18h4"/>
                 </svg>
                 <span className="text-[#16a34a] text-xs font-medium">PART NUMBER</span>
               </div>
@@ -170,8 +192,23 @@ function FirstRow() {
             </div>
             <div className="py-6 px-3 group-hover:bg-green-50/30 transition-colors">
               <div className="flex items-center justify-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-[#16a34a]" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  className="h-5 w-5 text-[#16a34a]" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round"
+                >
+                  <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <path d="M3 15h6"/>
+                  <path d="M3 18h6"/>
+                  <path d="M11 12h4"/>
+                  <path d="M11 15h4"/>
+                  <path d="M11 18h4"/>
                 </svg>
                 <span className="text-2xl text-gray-800 font-bold">9253010242</span>
               </div>
