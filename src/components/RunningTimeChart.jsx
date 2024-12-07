@@ -3,15 +3,16 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ReferenceLine, Cell } from 'recha
 function RunningTimeChart() {
   const data = [
     { hour: '0', value: 85 },
-    { hour: '1', value: 180 },
+    { hour: '1', value: 140 },
     { hour: '2', value: 95 },
-    { hour: '3', value: 180 },
+    { hour: '3', value: 130 },
     { hour: '4', value: 90 },
-    { hour: '5', value: 150 },
+    { hour: '5', value: 120 },
     { hour: '6', value: 98 },
-    { hour: '7', value: 180 },
+    { hour: '7', value: 125 },
     { hour: '8', value: 88 },
-    { hour: '9.5', value: 180 }
+    { hour: '9', value: 135 },
+    { hour: '10', value: 110 }
   ];
 
   const threshold = 103;
@@ -90,8 +91,8 @@ function RunningTimeChart() {
               padding={{ left: 0, right: 0 }}
             />
             <YAxis 
-              domain={[1, 200]}
-              ticks={[1, 50, 100, 150, 200]}
+              domain={[0, 150]}
+              ticks={[1, 10, 50, 100, 150]}
               tickSize={0}
               width={30}
               axisLine={{ stroke: '#e5e7eb' }}
