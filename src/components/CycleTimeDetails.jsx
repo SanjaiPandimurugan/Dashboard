@@ -109,6 +109,8 @@ function CycleTimeDetails() {
     }
   });
 
+  const [selectedShift, setSelectedShift] = useState('1');
+
   const handleEdit = (field, value) => {
     setEditingField(field);
     setTempValue(value.toString());
@@ -661,19 +663,29 @@ function CycleTimeDetails() {
         <CardWrapper className="p-8 relative bg-white/80 backdrop-blur-sm border border-gray-200/50
                              bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] 
                              from-blue-50/50 via-white to-indigo-50/30">
-          <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-3 pb-4 
-                      border-b border-gray-200/70 relative">
-            <div className="p-2 bg-red-100 rounded-lg shadow-sm">
-              <FaTimes className="text-red-500 w-5 h-5" />
+          <div className="flex items-center justify-between mb-6 pb-4 border-b border-gray-200/70">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-red-100 rounded-lg shadow-sm">
+                <FaTimes className="text-red-500 w-5 h-5" />
+              </div>
+              <span className="text-xl font-semibold text-gray-800">Stop Time and Rejection Details</span>
             </div>
-            <span>Stop Time and Rejection Details</span>
-            {hasChanges && (
-              <span className="ml-auto text-xs bg-yellow-100 text-yellow-700 px-3 py-1 
-                            rounded-full font-medium animate-pulse shadow-sm">
-                Unsaved Changes
-              </span>
-            )}
-          </h2>
+            
+            {/* Shift Selection Dropdown */}
+            <div className="flex items-center gap-2">
+              <label className="text-sm font-medium text-gray-600">SHIFT:</label>
+              <select
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+                           focus:ring-blue-500/20 focus:border-blue-500 text-sm
+                           bg-white shadow-sm"
+                value={selectedShift}
+                onChange={(e) => setSelectedShift(e.target.value)}
+              >
+                <option value="1">SHIFT 1</option>
+                <option value="2">SHIFT 2</option>
+              </select>
+            </div>
+          </div>
           
           <div className="space-y-8">
             {/* Rejection Entries */}
