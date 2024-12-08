@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaClock, FaEdit, FaTimes, FaArrowRight, FaBullseye, FaPlus, FaTrash, FaCheck } from 'react-icons/fa';
+import { FaClock, FaEdit, FaTimes, FaArrowRight, FaBullseye, FaPlus, FaTrash, FaCheck, FaFileDownload, FaCalendar, FaCheckSquare } from 'react-icons/fa';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 
@@ -97,6 +97,17 @@ function CycleTimeDetails() {
   const [targetValueSuccess, setTargetValueSuccess] = useState(false);
   const [rejectionSuccess, setRejectionSuccess] = useState(false);
   const [stopTimeSuccess, setStopTimeSuccess] = useState(false);
+
+  // Add new state for report generation
+  const [reportData, setReportData] = useState({
+    fromDate: format(new Date(), 'yyyy-MM-dd'),
+    toDate: format(new Date(), 'yyyy-MM-dd'),
+    metrics: {
+      availability: false,
+      performance: false,
+      quality: false
+    }
+  });
 
   const handleEdit = (field, value) => {
     setEditingField(field);
@@ -243,6 +254,22 @@ function CycleTimeDetails() {
       setTimeout(() => setStopTimeSuccess(false), 3000);
     }
     toast.success(`${section} updated successfully!`);
+  };
+
+  // Handle report generation
+  const handleGenerateReport = () => {
+    const selectedMetrics = Object.entries(reportData.metrics)
+      .filter(([_, value]) => value)
+      .map(([key]) => key);
+
+    if (selectedMetrics.length === 0) {
+      toast.error('Please select at least one metric');
+      return;
+    }
+
+    // Add your report generation logic here
+    toast.success('Generating report...');
+    console.log('Generating report with:', reportData);
   };
 
   const renderField = (section, label, field, value, unit, icon) => (
@@ -496,7 +523,7 @@ function CycleTimeDetails() {
                 <Breadcrumb />
               </div>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center">
               <button
                 onClick={() => navigate('/')}
                 className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-gray-900 
@@ -504,14 +531,6 @@ function CycleTimeDetails() {
               >
                 <FaArrowRight className="w-4 h-4" />
                 <span>Exit</span>
-              </button>
-              <button
-                onClick={handleSubmitAll}
-                className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 
-                         hover:from-blue-700 hover:to-indigo-700 text-white font-medium rounded-lg 
-                         transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-              >
-                Save All Changes
               </button>
             </div>
           </div>
@@ -746,6 +765,94 @@ function CycleTimeDetails() {
               )}
             </div>
           )}
+        </CardWrapper>
+
+        {/* Replace Submit All button with Report Generation Box */}
+        <CardWrapper className="p-8 relative bg-white/80 backdrop-blur-sm border border-gray-200/50
+                             bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] 
+                             from-blue-50/50 via-white to-indigo-50/30 mt-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+            <FaFileDownload className="text-blue-600" />
+            Report Generation
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Date Selection */}
+            <div className="space-y-4">
+              <div className="flex flex-col gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">From Date</label>
+                  <input
+                    type="date"
+                    value={reportData.fromDate}
+                    onChange={(e) => setReportData(prev => ({
+                      ...prev,
+                      fromDate: e.target.value
+                    }))}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+                             focus:ring-blue-500/20 focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">To Date</label>
+                  <input
+                    type="date"
+                    value={reportData.toDate}
+                    onChange={(e) => setReportData(prev => ({
+                      ...prev,
+                      toDate: e.target.value
+                    }))}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 
+                             focus:ring-blue-500/20 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Metrics Selection */}
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700 mb-4">Select Metrics</label>
+              <div className="space-y-3">
+                {['availability', 'performance', 'quality'].map((metric) => (
+                  <div key={metric} className="flex items-center gap-3">
+                    <div
+                      onClick={() => setReportData(prev => ({
+                        ...prev,
+                        metrics: {
+                          ...prev.metrics,
+                          [metric]: !prev.metrics[metric]
+                        }
+                      }))}
+                      className={`w-5 h-5 rounded border cursor-pointer transition-colors
+                                flex items-center justify-center
+                                ${reportData.metrics[metric] 
+                                  ? 'bg-blue-600 border-blue-600' 
+                                  : 'border-gray-300 hover:border-blue-500'}`}
+                    >
+                      {reportData.metrics[metric] && (
+                        <FaCheckSquare className="w-4 h-4 text-white" />
+                      )}
+                    </div>
+                    <span className="text-sm text-gray-700 capitalize">{metric}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Generate Report Button */}
+          <div className="flex justify-end mt-8 pt-6 border-t border-gray-200">
+            <button
+              onClick={handleGenerateReport}
+              className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 
+                       hover:from-blue-700 hover:to-blue-600 text-white font-medium rounded-lg
+                       transition duration-300 shadow-md hover:shadow-lg
+                       flex items-center gap-2"
+            >
+              <FaFileDownload className="w-4 h-4" />
+              Generate Report
+            </button>
+          </div>
         </CardWrapper>
       </div>
     </div>
